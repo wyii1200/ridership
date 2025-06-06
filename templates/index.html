@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Komuter Ridership Predictor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">Komuter Ridership Predictor</h1>
+
+    <form action="/" method="POST" class="space-y-4">
+
+      <!-- Hour -->
+      <div>
+        <label class="block font-medium mb-1" for="hour">Hour (0–23)</label>
+        <select name="hour" id="hour" required class="w-full border rounded p-2">
+          <option value="" disabled selected>Select hour</option>
+          {% for h in range(0, 24) %}
+          <option value="{{ h }}">{{ h }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Day of Week -->
+      <div>
+        <label class="block font-medium mb-1" for="day_of_week">Day of the Week</label>
+        <select name="day_of_week" id="day_of_week" required class="w-full border rounded p-2">
+          <option value="" disabled selected>Select day</option>
+          <option value="0">Monday</option>
+          <option value="1">Tuesday</option>
+          <option value="2">Wednesday</option>
+          <option value="3">Thursday</option>
+          <option value="4">Friday</option>
+          <option value="5">Saturday</option>
+          <option value="6">Sunday</option>
+        </select>
+      </div>
+
+      <!-- Is Weekend -->
+      <div>
+        <label class="block font-medium mb-1" for="is_weekend">Is Weekend?</label>
+        <select name="is_weekend" id="is_weekend" required class="w-full border rounded p-2">
+          <option value="" disabled selected>Select</option>
+          <option value="0">No (Weekday)</option>
+          <option value="1">Yes (Weekend)</option>
+        </select>
+      </div>
+
+      <!-- Origin Station -->
+      <div>
+        <label class="block font-medium mb-1" for="origin">Origin Station</label>
+        <select name="origin" id="origin" required class="w-full border rounded p-2">
+          <option value="" disabled selected>Select origin</option>
+          {% for station in origin_stations %}
+          <option value="{{ station }}">{{ station }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Destination Station -->
+      <div>
+        <label class="block font-medium mb-1" for="destination">Destination Station</label>
+        <select name="destination" id="destination" required class="w-full border rounded p-2">
+          <option value="" disabled selected>Select destination</option>
+          {% for station in destination_stations %}
+          <option value="{{ station }}">{{ station }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Predict</button>
+    </form>
+
+    <!-- Prediction result -->
+    {% if prediction %}
+    <div class="mt-6 p-4 text-center rounded bg-green-100 text-green-800 font-semibold">
+      Predicted Ridership: {{ prediction }}
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
+
